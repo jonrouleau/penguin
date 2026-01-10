@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # Disable cros-motd
 sudo bash - << EOF
 echo 'DPkg::Post-Invoke {"rm -f /etc/profile.d/cros-motd.sh";};' >> /etc/apt/apt.conf.d/99blacklist
