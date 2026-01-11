@@ -92,6 +92,11 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
   --nix-extra-conf-file <(echo "experimental-features = nix-command flakes")
 EOF
 
+# VSCode
+sudo bash - << EOF
+snap install code
+EOF
+
 # Clean
 sudo bash - << EOF
 apt-get -y autoremove
