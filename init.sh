@@ -41,12 +41,8 @@ EOF
 # Environment
 sudo bash - << EOF
 cat << 'ENVIRONMENT' > /etc/environment.d/00init.conf
-PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 XDG_CONFIG_HOME=\$HOME/.config
 XDG_DATA_DIRS=\$HOME/.local/share:/usr/local/share:/usr/share
-ENVIRONMENT
-cat << 'ENVIRONMENT' > /etc/environment.d/99local.conf
-PATH=\$HOME/.local/bin:\$PATH
 ENVIRONMENT
 EOF
 
@@ -88,14 +84,6 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
   --no-modify-profile \
   --yes \
   --nix-extra-conf-file <(echo "experimental-features = nix-command flakes")
-rm -f /etc/fish/conf.d/nix.fish /etc/profile.d/nix.sh
-mv -f /etc/bash.bashrc{.backup-before-nix,}
-cat << 'ENVIRONMENT' > /etc/environment.d/60nix.conf
-NIX_PROFILES=/nix/var/nix/profiles/default \$HOME/.nix-profile
-NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-PATH=\$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:\$PATH
-XDG_DATA_DIRS=\$HOME/.nix-profile/share:/nix/var/nix/profiles/default/share:\$XDG_DATA_DIRS
-ENVIRONMENT
 EOF
 
 # Clean
