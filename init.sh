@@ -88,6 +88,8 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
   --no-modify-profile \
   --yes \
   --nix-extra-conf-file <(echo "experimental-features = nix-command flakes")
+rm -f /etc/fish/conf.d/nix.fish /etc/profile.d/nix.sh
+mv -f /etc/bash.bashrc{.backup-before-nix,}
 cat << 'ENVIRONMENT' > /etc/environment.d/60nix.conf
 NIX_PROFILES=/nix/var/nix/profiles/default \$HOME/.nix-profile
 NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
