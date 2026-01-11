@@ -79,6 +79,7 @@ EOF
 # Snap
 sudo bash - << EOF
 apt-get -y install snapd squashfuse
+snap install snapd
 EOF
 
 # Nix
