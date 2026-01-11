@@ -80,6 +80,7 @@ EOF
 sudo bash - << EOF
 apt-get -y install snapd squashfuse
 snap install snapd
+snap set system experimental.hidden-snap-folder=true
 EOF
 
 # Nix
