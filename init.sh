@@ -94,7 +94,7 @@ EOF
 
 # VSCode
 sudo bash - << EOF
-snap install code
+snap install --classic code
 EOF
 
 # Clean
