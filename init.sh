@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
 # Disable cros-motd
@@ -13,15 +12,6 @@ EOF
 sudo bash - << EOF
 apt-get update
 apt-get -y dist-upgrade
-EOF
-
-# Fish
-sudo bash - << EOF
-echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/fish.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
-apt-get -y install fish
-echo 'set fish_greeting' > /etc/fish/conf.d/greeting.fish
-usermod -s /usr/bin/fish root
-usermod -s /usr/bin/fish $USER
 EOF
 
 # Vim
@@ -39,6 +29,15 @@ syntax on
 VIMRC
 EOF
 
+# Fish
+sudo bash - << EOF
+echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/fish.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
+apt-get -y install fish
+echo 'set fish_greeting' > /etc/fish/conf.d/greeting.fish
+usermod -s /usr/bin/fish root
+usermod -s /usr/bin/fish $USER
+EOF
+
 # Environment
 sudo bash - << EOF
 cat << 'ENVIRONMENT' > /etc/environment.d/00init.conf
@@ -48,14 +47,6 @@ XDG_DATA_DIRS=\$HOME/.local/share:/usr/local/share:/usr/share
 ENVIRONMENT
 cat << 'ENVIRONMENT' > /etc/environment.d/99local.conf
 PATH=\$HOME/.local/bin:\$PATH
-ENVIRONMENT
-EOF
-
-# Sommelier
-sudo bash - << EOF
-sed -i '/SOMMELIER_ACCELERATORS/d' /etc/systemd/user/sommelier*.service.d/cros-sommelier-*.conf
-cat << 'ENVIRONMENT' > /etc/environment.d/50sommelier.conf
-SOMMELIER_ACCELERATORS=Super_L,<Alt>bracketleft,<Alt>bracketright,<Alt>tab,<Alt>equal,<Alt>bracketleft,<Alt>bracketright,<Control><Alt>comma,<Control><Alt>period
 ENVIRONMENT
 EOF
 
@@ -75,6 +66,20 @@ Environment="ELECTRON_OZONE_PLATFORM_HINT=wayland"
 CROS_GARCON
 EOF
 
+# Sommelier
+sudo bash - << EOF
+sed -i '/SOMMELIER_ACCELERATORS/d' /etc/systemd/user/sommelier*.service.d/cros-sommelier-*.conf
+cat << 'ENVIRONMENT' > /etc/environment.d/50sommelier.conf
+SOMMELIER_ACCELERATORS=Super_L,<Alt>bracketleft,<Alt>bracketright,<Alt>tab,<Alt>equal,<Alt>bracketleft,<Alt>bracketright,<Control><Alt>comma,<Control><Alt>period
+ENVIRONMENT
+EOF
+
+# Podman
+sudo bash - << EOF
+usermod -v 1000000-1999999 -w 1000000-1999999 $USER
+apt-get -y install podman
+EOF
+
 # Nix
 sudo bash - << EOF
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
@@ -89,12 +94,6 @@ NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 PATH=\$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:\$PATH
 XDG_DATA_DIRS=\$HOME/.nix-profile/share:/nix/var/nix/profiles/default/share:\$XDG_DATA_DIRS
 ENVIRONMENT
-EOF
-
-# Podman
-sudo bash - << EOF
-usermod -v 1000000-1999999 -w 1000000-1999999 $USER
-apt-get -y install podman
 EOF
 
 # Clean
