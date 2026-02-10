@@ -8,6 +8,11 @@ rm -f /etc/profile.d/cros-motd.sh
 rm -f ~$USER/.local/share/cros-motd
 EOF
 
+# Backports
+sudo bash - << EOF
+sed -e '/-updates/p' -e 's/-updates/-backports/' -i /etc/apt/sources.list
+EOF
+
 # Update
 sudo bash - << EOF
 apt-get update
