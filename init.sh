@@ -95,9 +95,9 @@ EOF
 
 # GitHub CLI
 sudo bash - << EOF
-curl -L https://cli.github.com/packages/githubcli-archive-keyring.gpg -O --output-dir /etc/apt/keyrings
-cat << SOURCE > /etc/apt/sources.list.d/github-cli.list
-deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main
+curl -L https://cli.github.com/packages/githubcli-archive-keyring.gpg > /etc/apt/keyrings/githubcli.gpg
+cat << SOURCE > /etc/apt/sources.list.d/githubcli.list
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli.gpg] https://cli.github.com/packages stable main
 SOURCE
 apt-get update
 apt-get -y install gh
@@ -105,9 +105,9 @@ EOF
 
 # VSCode
 sudo bash - << EOF
-curl -L https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg
+curl -L https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/vscode.gpg
 cat << SOURCE > /etc/apt/sources.list.d/vscode.list
-deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/vscode.gpg] https://packages.microsoft.com/repos/code stable main
 SOURCE
 apt-get update
 apt-get -y install code
