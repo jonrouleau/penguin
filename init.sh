@@ -117,6 +117,16 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
   --nix-extra-conf-file <(echo "experimental-features = nix-command flakes")
 EOF
 
+# 1Password
+sudo bash - << EOF
+curl -L https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor > /etc/apt/keyrings/1password.gpg
+cat << SOURCE > /etc/apt/sources.list.d/1password.list
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/1password.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main
+SOURCE
+apt-get update
+apt-get -y install 1password-cli
+EOF
+
 # GitHub CLI
 sudo bash - << EOF
 curl -L https://cli.github.com/packages/githubcli-archive-keyring.gpg > /etc/apt/keyrings/githubcli.gpg
