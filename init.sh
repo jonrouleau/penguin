@@ -76,13 +76,6 @@ usermod -v 1000000-1999999 -w 1000000-1999999 $USER
 apt-get -y install podman
 EOF
 
-# Snap
-sudo bash - << EOF
-apt-get -y install snapd squashfuse
-snap install snapd
-snap set system experimental.hidden-snap-folder=true
-EOF
-
 # Nix
 sudo bash - << EOF
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
