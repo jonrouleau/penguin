@@ -19,6 +19,12 @@ apt-get update
 apt-get -y dist-upgrade
 EOF
 
+# Release
+sudo bash - << EOF
+apt-get -y install lsb-release
+EOF
+RELEASE=$(lsb_release -sc 2>/dev/null)
+
 # Vim
 sudo bash - << EOF
 echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/vim.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
