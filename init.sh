@@ -76,6 +76,15 @@ usermod -v 1000000-1999999 -w 1000000-1999999 $USER
 apt-get -y install podman
 EOF
 
+# Flatpak
+sudo bash - << EOF
+apt-get -y install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+cat << 'ENVIRONMENT' > /etc/environment.d/60flatpak.conf
+XDG_DATA_DIRS=\$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:\$XDG_DATA_DIRS
+ENVIRONMENT
+EOF
+
 # Nix
 sudo bash - << EOF
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
