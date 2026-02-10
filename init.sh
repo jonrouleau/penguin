@@ -25,6 +25,11 @@ apt-get -y install lsb-release
 EOF
 RELEASE=$(lsb_release -sc 2>/dev/null)
 
+# Mesa
+sudo bash - << EOF
+apt-get -y install -t $RELEASE-backports mesa-vulkan-drivers mesa-utils vulkan-tools
+EOF
+
 # Vim
 sudo bash - << EOF
 echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/vim.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
