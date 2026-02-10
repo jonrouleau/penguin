@@ -105,7 +105,12 @@ EOF
 
 # VSCode
 sudo bash - << EOF
-snap install --classic code
+curl -L https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg
+cat << SOURCE > /etc/apt/sources.list.d/vscode.list
+deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main
+SOURCE
+apt-get update
+apt-get -y install code
 EOF
 
 # Clean
