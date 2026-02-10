@@ -125,6 +125,11 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) \
   --nix-extra-conf-file <(echo "experimental-features = nix-command flakes")
 EOF
 
+# Chromium
+sudo bash - << EOF
+apt-get -y install chromium
+EOF
+
 # 1Password
 sudo bash - << EOF
 curl -L https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor > /etc/apt/keyrings/1password.gpg
