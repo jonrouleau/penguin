@@ -54,6 +54,14 @@ usermod -s /usr/bin/fish root
 usermod -s /usr/bin/fish $USER
 EOF
 
+# Tools
+sudo bash - << EOF
+apt-get -y install \
+  dnsutils \
+  jq \
+  whois
+EOF
+
 # Htop
 sudo bash - << EOF
 echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/htop.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
