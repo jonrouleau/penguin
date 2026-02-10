@@ -54,6 +54,12 @@ usermod -s /usr/bin/fish root
 usermod -s /usr/bin/fish $USER
 EOF
 
+# Htop
+sudo bash - << EOF
+echo 'DPkg::Post-Invoke {"rm -f /usr/share/applications/htop.desktop";};' >> /etc/apt/apt.conf.d/99blacklist
+apt-get -y install htop
+EOF
+
 # Environment
 sudo bash - << EOF
 cat << 'ENVIRONMENT' > /etc/environment.d/00init.conf
