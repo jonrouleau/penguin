@@ -158,6 +158,7 @@ deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/vscode.gpg] h
 SOURCE
 apt-get update
 apt-get -y install code
+debconf-set-selections <<< "code code/add-microsoft-repo boolean false"
 EOF
 
 # Clean
